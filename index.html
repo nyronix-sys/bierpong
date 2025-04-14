@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,68 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bierpong Aufgabe</title>
   <style>
+    :root {
+      --primary-color: #ff6b9d;
+      --secondary-color: #ffffff;
+      --background-dark: #1a1a1a;
+      --text-light: #f8f8f8;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #1e1e1e;
-      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--background-dark);
+      color: var(--text-light);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
+      text-align: center;
     }
+    
     h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: #ffcc00;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-shadow: var(--shadow);
     }
-    .slot {
-      font-size: 2rem;
-      background-color: #333;
-      padding: 1rem 2rem;
-      border-radius: 1rem;
-      border: 2px solid #ffcc00;
+    
+    .slot-container {
+      width: 100%;
+      max-width: 600px;
       margin: 2rem 0;
-      min-height: 60px;
+    }
+    
+    .slot {
+      font-size: 1.8rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 107, 157, 0.3);
+      margin: 0 auto;
+      min-height: 120px;
       display: flex;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(5px);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
     }
+    
     button {
-      background-color: #ffcc00;
+      background-color: var(--primary-color);
+      color: white;
       border: none;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      box-shadow: var(--shadow);
     }
+    
     button:hover {
-      background-color: #e6b800;
+      background-color: #ff5290;
+      transform: translateY(-2px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .slot {
+        font-size: 1.5rem;
+        padding: 1.5rem;
+        min-height: 100px;
+      }
+      
+      button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .slot {
+        font-size: 1.3rem;
+        padding: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Bierpong Aufgabe</h1>
-  <div class="slot" id="slot">Bereit?</div>
+  <h1>Bierpong Aufgaben</h1>
+  <div class="slot-container">
+    <div class="slot" id="slot">Klicke auf den Button für eine Aufgabe</div>
+  </div>
   <button onclick="startSlot()">Aufgabe starten</button>
 
   <script>
-    const aufgaben = ['Trinke 2 Schlucke.', 'Du darfst eine Runde aussetzen.', 'Sprich mit französischem Akzent.', 'Der nächste Wurf entscheidet doppelt.', 'Sag „Prost“ auf 3 verschiedene Sprachen.', 'Tu so, als wärst du der Schiri.', 'Wirf den nächsten Ball mit der „falschen“ Hand.', 'Der nächste Treffer zählt doppelt – aber du trinkst mit.', 'Mach einen Becher-Shuffle (Vertausche 2).', 'Dein nächster Wurf ist ein Trickshot!', 'Nächster Wurf zählt doppelt', 'Wirf mit geschlossenen Augen',
-                     'Rückwärts werfen','Bounce-Wurf','Wirf über die Schulter','Wirf mit der schwachen Hand','Seitentausch', 'Team-Wurf', 'Jeder trinkt bevor der nächste Wurf kommt', 'Wer nicht trifft, muss einen Schluck nehmen', 'Eigene Becher dürfen verschoben werden', 'Ein eigener Becher wird entfernt', 'Ein Becher der anderen wird entfernt', 'Ein eigener Becher wird wieder aufgefüllt', 'Ein Becher der anderen wird wieder aufgefüllt', 'Nächster Treffer gewinnt', 'Nur die äußeren Becher zählen', 
-                     'Nur die mittleren Becher zählen', 'Nur die hinterste Reihe zählt', 'Nur der mittlere Becher zählt', 'Würfel entscheidet wie viele Becher beim nächsten Treffer entfernt werden', 'Jeder in der vorherigen Runde getroffene Becher wird wieder aufgefüllt'];
+    const aufgaben = [
+      'Trinke 2 Schlucke.', 
+      'Du darfst eine Runde aussetzen.', 
+      'Sprich mit französischem Akzent.', 
+      'Der nächste Wurf entscheidet doppelt.', 
+      'Sag „Prost“ auf 3 verschiedene Sprachen.', 
+      'Tu so, als wärst du der Schiri.', 
+      'Wirf den nächsten Ball mit der „falschen“ Hand.', 
+      'Der nächsten Treffer zählt doppelt – aber du trinkst mit.', 
+      'Mach einen Becher-Shuffle (Vertausche 2).', 
+      'Dein nächster Wurf ist ein Trickshot!',
+      'Nächster Wurf zählt doppelt',
+      'Wirf mit geschlossenen Augen',
+      'Rückwärts werfen',
+      'Bounce-Wurf',
+      'Wirf über die Schulter',
+      'Wirf mit der schwachen Hand',
+      'Seitentausch',
+      'Team-Wurf',
+      'Jeder trinkt bevor der nächste Wurf kommt',
+      'Wer nicht trifft, muss einen Schluck nehmen',
+      'Eigene Becher dürfen verschoben werden',
+      'Ein eigener Becher wird entfernt',
+      'Ein Becher der anderen wird entfernt',
+      'Ein eigener Becher wird wieder aufgefüllt',
+      'Ein Becher der anderen wird wieder aufgefüllt',
+      'Nächster Treffer gewinnt',
+      'Nur die äußeren Becher zählen',
+      'Nur die mittleren Becher zählen',
+      'Nur die hinterste Reihe zählt',
+      'Nur der mittlere Becher zählt',
+      'Würfel entscheidet wie viele Becher beim nächsten Treffer entfernt werden',
+      'Jeder in der vorherigen Runde getroffene Becher wird wieder aufgefüllt'
+    ];
+    
     let interval;
+    
     function startSlot() {
-      let i = 0;
       const slot = document.getElementById('slot');
+      const button = document.querySelector('button');
+      
+      // Disable button during animation
+      button.disabled = true;
+      button.style.opacity = '0.7';
+      button.textContent = 'Wird geladen...';
+      
+      let i = 0;
       clearInterval(interval);
+      
+      // Add spinning animation
+      slot.style.animation = 'none';
+      void slot.offsetWidth; // Trigger reflow
+      slot.style.animation = 'textBlur 0.1s infinite alternate';
+      
       interval = setInterval(() => {
         const random = aufgaben[Math.floor(Math.random() * aufgaben.length)];
         slot.textContent = random;
         i++;
+        
         if (i > 20) {
           clearInterval(interval);
+          slot.style.animation = 'none';
+          
+          // Re-enable button
+          button.disabled = false;
+          button.style.opacity = '1';
+          button.textContent = 'Neue Aufgabe';
         }
       }, 100);
     }
