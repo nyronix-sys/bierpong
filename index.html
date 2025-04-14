@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bierpong Aufgabe</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1e1e1e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #ffcc00;
+    }
+    .slot {
+      font-size: 2rem;
+      background-color: #333;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      border: 2px solid #ffcc00;
+      margin: 2rem 0;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button {
+      background-color: #ffcc00;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e6b800;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bierpong Aufgabe</h1>
+  <div class="slot" id="slot">Bereit?</div>
+  <button onclick="startSlot()">Aufgabe starten</button>
+
+  <script>
+    const aufgaben = ['Trinke mit der linken Hand.', 'Du musst 5 Sekunden lang tanzen.', 'Erzähle ein peinliches Erlebnis.', 'Trinke 2 Schlucke.', 'Spiele Luftgitarre für 10 Sekunden.', 'Imitiere jemanden am Tisch.', 'Singe ein Lied deiner Wahl.', 'Gib jemandem ein Kompliment.', 'Erfinde einen neuen Teamnamen.', 'Mach 5 Hampelmänner.', 'Flüster dein Lieblingsgetränk.', 'Sag das Alphabet rückwärts.', 'Du darfst eine Runde aussetzen.', 'Sprich für 1 Minute nur in Reimen.', 'Gurgle ein Lied.', 'Zeig dein Lieblings-Dance-Move.', 'Mach eine Tierimitation.', "Erfinde ein neues Wort für 'trinken'.", 'Tu so, als wärst du betrunken.', 'Erzähl einen Witz.', 'Trink mit einem Strohhalm (wenn keiner da ist: 2 Schlucke).', 'Sprich mit französischem Akzent.', 'Klopf dir selbst 10 Sekunden auf die Schulter.', 'Mach ein Selfie mit deinem Becher.', 'Sprich nur noch in Reimen – oder trink!', 'Mach ein Trinkspruch auf deinen Gegner.', 'Lass dich von jemandem füttern.', 'Gurgle ein Lied und lass die anderen raten.', 'Stell eine peinliche Frage.', 'Der linke Nachbar trinkt mit.', 'Stell eine Wahrheit-oder-Pflicht-Frage.', 'Balanciere deinen Becher 10 Sekunden auf dem Kopf.', 'Der rechte Nachbar darf dir eine Aufgabe stellen.', 'Trink aus einem anderen Becher deiner Wahl.', 'Denk dir einen Teamnamen aus.', 'Tu so, als wärst du ein Tier – 10 Sekunden lang.', 'Sag das Alphabet rückwärts – sonst trink.', 'Starte eine La-Ola am Tisch.', 'Tausche dein Getränk mit jemandem.', 'Sag den Namen aller am Tisch – falsch = trinken.', 'Der älteste am Tisch muss trinken.', 'Der jüngste muss trinken.', 'Überspringe eine Person beim nächsten Mal.', 'Trage deinen Becher wie ein Butler.', 'Sing ein Kinderlied mit voller Stimme.', 'Du bist der Barkeeper – nächste Runde ausschenken!', 'Der nächste Wurf entscheidet doppelt.', 'Lächle 30 Sekunden lang ununterbrochen.', 'Pantomime: Stell ein Wort dar, wer es errät, darf trinken.', 'Erzähle eine verrückte Geschichte – oder trink.', 'Schau jemandem tief in die Augen – 10 Sekunden.', 'Lüge jemanden an. Wer’s merkt, ist safe – sonst trinkst du.', 'Mach ein Herz mit deinen Händen für das Publikum.', 'Denk dir ein Trinkspiel aus – 1 Regel.', 'Sag „Prost“ auf 3 verschiedene Sprachen.', 'Der mit den buntesten Socken trinkt.', 'Guck 10 Sekunden ernst – wer lacht, trinkt.', 'Erkläre den Becher, als wär’s ein Kunstwerk.', 'Sag das Wort „Becher“ 10-mal schnell hintereinander.', 'Stell dich in die Ecke – 30 Sekunden Denkpause.', 'Mach einen Zaubertrick (oder trink).', 'Beschreibe deinen letzten Traum – egal wie weird.', 'Frag eine Deep-Talk-Frage.', 'Tu so, als wärst du der Schiri.', 'Wirf den nächsten Ball mit der „falschen“ Hand.', 'Du darfst einem anderen Spieler eine Aufgabe geben.', 'Sag deinem Gegner eine gute Eigenschaft.', 'Reim was auf „Bierpong“.', 'Mach eine Schätzfrage – bei falscher Antwort: trinken.', 'Der nächste Treffer zählt doppelt – aber du trinkst mit.', 'Trink auf das erste Wort, das dir in den Kopf kommt.', 'Der mit der lautesten Stimme trinkt.', 'Mach einen Becher-Shuffle (Vertausche 2).', 'Jeder gibt dir High-Five – wer es nicht tut, trinkt.', 'Dein nächster Wurf ist ein Trickshot!', 'Rede wie ein Roboter für eine Runde.', 'Gib dem Spiel einen neuen Namen.', "Sag 3 Promis, die du auf 'ne Party einladen würdest.", 'Der nächste, der redet, trinkt (Timer: 1 Minute).', 'Tu so, als wärst du betrunken (für 30 Sekunden).', 'Mach einen Toast auf deinen Becher.', 'Sag „Ich liebe Bierpong“ mit Gefühl.', 'Der Nächste, der lacht, trinkt.', 'Gib deinem Gegner einen neuen Spitznamen.', 'Denk dir ein neues Regel-Emoji aus.', 'Mach eine dramatische Becher-Rede.', 'Du bist jetzt Spielleiter – bis zur nächsten Aufgabe.', 'Sag etwas richtig Albernes – sonst trink.', 'Flüstere deinem Nachbarn eine geheime Mission.', 'Du darfst einen Becher nach Wahl verschieben.', 'Tu so, als wärst du ein TikTok-Star.', 'Fang an zu klatschen – wer mitmacht, ist safe.', 'Der erste, der „Prost“ sagt, ist safe – alle anderen trinken.', 'Mach eine Luftgitarre-Performance.', 'Der nächste Spieler muss deine Aufgabe machen.', 'Denk dir ein neues Trinklied aus (1 Zeile reicht).', 'Gib deinem Getränk einen Namen.', 'Lobe die Runde in 3 Worten.', 'Der Tisch wählt eine neue Regel (für 1 Runde).', 'Du bist VIP – überspringst eine Runde.'];
+    let interval;
+    function startSlot() {
+      let i = 0;
+      const slot = document.getElementById('slot');
+      clearInterval(interval);
+      interval = setInterval(() => {
+        const random = aufgaben[Math.floor(Math.random() * aufgaben.length)];
+        slot.textContent = random;
+        i++;
+        if (i > 20) {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+  </script>
+</body>
+</html>
